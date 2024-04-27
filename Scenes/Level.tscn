@@ -1,0 +1,125 @@
+[gd_scene load_steps=6 format=3 uid="uid://dfey0spk4hyex"]
+
+[ext_resource type="PackedScene" uid="uid://c4gu13rk1tb1" path="res://Scenes/Player.tscn" id="1_8h6f4"]
+[ext_resource type="Script" path="res://Scripts/PauseMenuController.cs" id="2_xv1h3"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ybdp7"]
+size = Vector3(60, 2, 60)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6il30"]
+size = Vector3(60, 2, 60)
+
+[sub_resource type="LabelSettings" id="LabelSettings_m2m36"]
+font_size = 100
+shadow_size = 20
+shadow_color = Color(0, 0, 0, 1)
+
+[node name="Main" type="Node3D"]
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_ybdp7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_6il30")
+
+[node name="Player" parent="." groups=["Persist"] instance=ExtResource("1_8h6f4")]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 1.32, 0, 0.585)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.743098, 0.640935, -0.192375, 0, 0.287478, 0.957787, 0.669183, -0.71173, 0.213624, 2.95761, 5.26892, -3.2843)
+
+[node name="PauseMenu" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_xv1h3")
+
+[node name="Buttons" type="Panel" parent="PauseMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SaveGameButton" type="Button" parent="PauseMenu/Buttons"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3
+anchor_top = 0.6
+anchor_right = 0.7
+anchor_bottom = 0.61
+offset_top = -12.708
+offset_bottom = 12.708
+grow_horizontal = 2
+grow_vertical = 2
+text = "Save Game
+"
+
+[node name="LoadGameButton" type="Button" parent="PauseMenu/Buttons"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3
+anchor_top = 0.67
+anchor_right = 0.7
+anchor_bottom = 0.67
+offset_top = -15.634
+offset_bottom = 15.366
+grow_horizontal = 2
+grow_vertical = 2
+text = "Load Game"
+
+[node name="ExitToMenuButton" type="Button" parent="PauseMenu/Buttons"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3
+anchor_top = 0.72
+anchor_right = 0.7
+anchor_bottom = 0.75
+grow_horizontal = 2
+grow_vertical = 2
+text = "Exit to Menu"
+
+[node name="ReturnToGameButton" type="Button" parent="PauseMenu/Buttons"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3
+anchor_top = 0.8
+anchor_right = 0.7
+anchor_bottom = 0.8
+grow_horizontal = 2
+grow_vertical = 2
+text = "Back"
+
+[node name="PauseLabel" type="Label" parent="PauseMenu/Buttons"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.3
+anchor_right = 0.5
+anchor_bottom = 0.3
+grow_horizontal = 2
+grow_vertical = 2
+text = "PAUSE"
+label_settings = SubResource("LabelSettings_m2m36")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true

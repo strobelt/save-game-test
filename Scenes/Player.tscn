@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://c4gu13rk1tb1"]
+
+[ext_resource type="Script" path="res://Scripts/Player.cs" id="1_6yt41"]
+[ext_resource type="Script" path="res://Scripts/CameraJoint.cs" id="2_pkjoy"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1407q"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_jhvx3"]
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_6yt41")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_1407q")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="."]
+spring_length = 7.0
+margin = 0.2
+script = ExtResource("2_pkjoy")
+
+[node name="Camera3D" type="Camera3D" parent="SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25464, 0)
+
+[node name="CharacterShape" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_jhvx3")
