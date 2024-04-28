@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://c8bpnxamcu3u4"]
+[gd_scene load_steps=3 format=3 uid="uid://c8bpnxamcu3u4"]
 
 [ext_resource type="Script" path="res://Scripts/MainMenuController.cs" id="1_fyitp"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_f821o"]
+font_size = 100
+shadow_size = 20
+shadow_color = Color(0, 0, 0, 1)
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -11,8 +16,56 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_fyitp")
 
-[node name="StartButton" type="Button" parent="."]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+[node name="Buttons" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StartButton" type="Button" parent="Buttons"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3
+anchor_top = 0.6
+anchor_right = 0.7
+anchor_bottom = 0.61
+offset_top = -12.0
+offset_right = 0.799995
+offset_bottom = 12.0
 text = "Start Game"
+
+[node name="LoadGameButton" type="Button" parent="Buttons"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3
+anchor_top = 0.67
+anchor_right = 0.7
+anchor_bottom = 0.67
+offset_top = -15.634
+offset_bottom = 15.366
+grow_horizontal = 2
+grow_vertical = 2
+text = "Load Game"
+
+[node name="GameTitle" type="Label" parent="Buttons"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.3
+anchor_right = 0.5
+anchor_bottom = 0.3
+grow_horizontal = 2
+grow_vertical = 2
+text = "Game title"
+label_settings = SubResource("LabelSettings_f821o")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true

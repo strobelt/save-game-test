@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://dfey0spk4hyex"]
+[gd_scene load_steps=7 format=3 uid="uid://dfey0spk4hyex"]
 
 [ext_resource type="PackedScene" uid="uid://c4gu13rk1tb1" path="res://Scenes/Player.tscn" id="1_8h6f4"]
+[ext_resource type="Script" path="res://Scripts/SaveFileHandler.cs" id="1_ye1xn"]
 [ext_resource type="Script" path="res://Scripts/PauseMenuController.cs" id="2_xv1h3"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ybdp7"]
@@ -15,6 +16,7 @@ shadow_size = 20
 shadow_color = Color(0, 0, 0, 1)
 
 [node name="Main" type="Node3D"]
+script = ExtResource("1_ye1xn")
 
 [node name="Ground" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
