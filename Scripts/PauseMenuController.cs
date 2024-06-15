@@ -11,8 +11,8 @@ public partial class PauseMenuController : Control
   {
     Hide();
     ProcessMode = Node.ProcessModeEnum.Always;
-    
-    saveFileHandler = (SaveFileHandler)GetTree().Root.GetNode("Main");
+
+    saveFileHandler = (SaveFileHandler)GetNode("SaveFileHandler");
 
     var saveGameButton = (Button)GetNode("Buttons/SaveGameButton");
     saveGameButton.Pressed += SaveGamePressed;
@@ -59,7 +59,15 @@ public partial class PauseMenuController : Control
     GetTree().ChangeSceneToFile("res://Scenes/MainMenu.tscn");
   }
 
-  private void SaveGamePressed() => saveFileHandler.SaveGame();
+  private void SaveGamePressed()
+  {
+    UnPause();
+    saveFileHandler.SaveGame();
+  }
 
-  private void LoadGamePressed() => saveFileHandler.LoadGame();
+  private void LoadGamePressed()
+  {
+    UnPause();
+    saveFileHandler.LoadGame();
+  }
 }

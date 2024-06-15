@@ -6,6 +6,13 @@ public partial class SaveFileHandler : Node
   public void SaveGame()
   {
     using var saveFile = FileAccess.Open("user://savegame.save", FileAccess.ModeFlags.Write);
+
+    var sceneData = new Dictionary<string, Variant>() {
+      {"SceneFilePath", GetTree().CurrentScene.SceneFilePath}
+    };
+
+    saveFile.StoreVar(sceneData);
+
     var saveNodes = GetTree().GetNodesInGroup("Persist");
     foreach (var node in saveNodes)
     {
@@ -31,16 +38,41 @@ public partial class SaveFileHandler : Node
     var saveFilePath = "user://savegame.save";
     if (!FileAccess.FileExists(saveFilePath)) return;
 
-    var saveNodes = GetTree().GetNodesInGroup("Persist");
-    foreach (Node saveNode in saveNodes) saveNode.QueueFree();
-
     using var saveFile = FileAccess.Open(saveFilePath, FileAccess.ModeFlags.Read);
 
-    var nodeData = (Godot.Collections.Dictionary<string, Variant>)saveFile.GetVar();
-    var objectScene = GD.Load<PackedScene>(nodeData["SceneName"].ToString());
-    var obj = objectScene.Instantiate<Node>();
-    GetNode(nodeData["Parent"].ToString()).AddChild(obj);
-    obj.Call("Load", nodeData);
+    Node loadingScene = null;
+    var root = GetTree().Root;
+
+    while (saveFile.GetPosition() < saveFile.GetLength())
+    {
+      var nodeData = (Godot.Collections.Dictionary<string, Variant>)saveFile.GetVar();
+
+      if (loadingScene == null)
+      {
+        var sceneFile = GD.Load<PackedScene>(nodeData["SceneFilePath"].ToString());
+        GD.Print(nodeData["SceneFilePath"].ToString());
+        var currentScene = GetTree().CurrentScene;
+        GD.Print(currentScene);
+        root.RemoveChild(currentScene);
+        loadingScene = sceneFile.Instantiate();
+        /*
+        var saveNodes = loadingScene.GetTree().GetNodesInGroup("Persist");
+        foreach (Node saveNode in saveNodes) {
+          GD.Print(saveNode.Name);
+          saveNode.QueueFree();
+        }
+        */
+      }
+      else
+      {
+        var objectScene = GD.Load<PackedScene>(nodeData["SceneName"].ToString());
+        var obj = objectScene.Instantiate<Node>();
+        loadingScene.AddChild(obj);
+        obj.Call("Load", nodeData);
+      }
+    }
+    root.AddChild(loadingScene);
+    GD.Print(GetTree().CurrentScene);
   }
 
   public bool HasSaveFile()
